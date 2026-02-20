@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentinelX Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans min-h-screen p-6 selection:bg-blue-500/30">
+
+    <header class="mb-10 text-center fade-in">
+        <h1 class="text-5xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-600 mb-2">
+            SENTINEL<span class="text-slate-100">X</span>
+        </h1>
+        <p class="text-slate-400 text-sm tracking-widest uppercase">Real-Time Fraud Intelligence Engine</p>
+    </header>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <div class="space-y-6 fade-in" style="animation-delay: 0.1s;">
+            
+            <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 p-6 rounded-2xl shadow-2xl">
+                <h2 class="text-lg font-semibold text-slate-100 mb-4 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    API Injector
+                </h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Transaction Amount ($)</label>
+                        <input type="number" id="txAmount" value="4500.00" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500 transition-colors">
+                    </div>
+                    <button onclick="submitTransaction()" id="submitBtn" class="w-full relative group overflow-hidden bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all duration-300">
+                        <span id="btnText">Inject Transaction Pattern</span>
+                        <svg id="btnSpinner" class="hidden animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="resultCard" class="hidden bg-slate-800/50 backdrop-blur-md border p-6 rounded-2xl shadow-2xl transition-all duration-500">
+                <h3 class="text-sm text-slate-400 mb-1">Transaction ID: <span id="resId" class="text-slate-200 font-mono"></span></h3>
+                <div class="flex items-center justify-between mb-4">
+                    <p class="text-2xl font-bold" id="resAction"></p>
+                    <span id="resBadge" class="px-3 py-1 text-xs font-bold rounded-full"></span>
+                </div>
+                
+                <div class="w-full bg-slate-900 rounded-full h-2.5 mb-1 overflow-hidden">
+                    <div id="probBar" class="h-2.5 rounded-full transition-all duration-1000 w-0"></div>
+                </div>
+                <p class="text-right text-xs text-slate-400">Probability: <span id="resProb"></span></p>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2 space-y-6 fade-in" style="animation-delay: 0.2s;">
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 p-4 rounded-xl text-center shadow-lg">
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">Total Volume</p>
+                    <p id="kpiTotal" class="text-2xl font-bold text-slate-100 mt-1">-</p>
+                </div>
+                <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 p-4 rounded-xl text-center shadow-lg">
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">Fraud Flags</p>
+                    <p id="kpiFraud" class="text-2xl font-bold text-red-400 mt-1">-</p>
+                </div>
+                <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 p-4 rounded-xl text-center shadow-lg">
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">Avg Risk Score</p>
+                    <p id="kpiAvgRisk" class="text-2xl font-bold text-yellow-400 mt-1">-</p>
+                </div>
+                <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 p-4 rounded-xl text-center shadow-lg">
+                    <p class="text-xs text-slate-400 uppercase tracking-wide">API Latency</p>
+                    <p id="kpiLatency" class="text-2xl font-bold text-green-400 mt-1">~12ms</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 p-4 rounded-xl shadow-lg h-64 flex items-center justify-center">
+                    <canvas id="riskChart"></canvas>
+                </div>
+                <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 p-4 rounded-xl shadow-lg h-64 flex items-center justify-center">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 rounded-xl shadow-lg overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-700 flex justify-between items-center">
+                    <h2 class="text-sm font-semibold text-slate-200">Live Decision Log</h2>
+                    <span class="flex h-3 w-3 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                </div>
+                <div class="overflow-y-auto max-h-48">
+                    <table class="w-full text-sm text-left text-slate-400">
+                        <thead class="text-xs uppercase bg-slate-900/50 text-slate-500 sticky top-0">
+                            <tr>
+                                <th class="px-6 py-3">ID</th>
+                                <th class="px-6 py-3">Amount</th>
+                                <th class="px-6 py-3">Probability</th>
+                                <th class="px-6 py-3">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody" class="divide-y divide-slate-700">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div> <footer class="mt-12 text-center pb-6 fade-in" style="animation-delay: 0.3s;">
+        <p class="text-sm text-slate-500 tracking-wider">
+            Engineered & Developed by <span class="text-blue-400 font-semibold tracking-normal">Mayank Vispute</span>
+        </p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

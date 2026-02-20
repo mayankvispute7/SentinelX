@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # Service 1: Our FastAPI ML Application
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      # We override the localhost URL so the API looks for the container named 'db'
+      - DATABASE_URL=postgresql://admin:admin123@db:5432/sentinelx
+
+  # Service 2: The PostgreSQL Database Container
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin123
+      - POSTGRES_DB=sentinelx
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# Volumes: This ensures our database doesn't get wiped if we restart the container
+volumes:
+  postgres_data:
