@@ -1,35 +1,20 @@
-# 🛡 SentinelX
+# 🛡️ SentinelX
 
-### Enterprise Security Intelligence & Threat Detection Platform
+## Enterprise Security Intelligence & Threat Detection Platform
 
-SentinelX is an AI-powered security intelligence platform built to detect anomalies, monitor threats, and provide real-time insights for modern enterprise environments.
+SentinelX is a cloud-native security intelligence platform designed to detect anomalies, monitor suspicious activities, and provide real-time threat visibility.
 
-It combines machine learning, FastAPI microservices, observability, and security-focused engineering principles to create a scalable threat detection system.
-
----
-
-## ✨ Features
-
-- Real-Time Threat Detection
-- Anomaly Detection using XGBoost
-- Security Monitoring
-- REST APIs
-- Authentication Layer
-- Logging & Observability
-- Alert Management
-- Dashboard Monitoring
-- Dockerized Architecture
-- Microservice Design
+Built using FastAPI microservices, XGBoost, PostgreSQL, and Docker, the platform follows modern DevSecOps and enterprise security principles.
 
 ---
 
-## 🏗 Architecture
+# Architecture
 
-Client
+Client Dashboard
 ↓
-FastAPI API
+FastAPI API Layer
 ↓
-Authentication Layer
+Authentication & Logging
 ↓
 Threat Detection Engine
 ↓
@@ -37,36 +22,68 @@ XGBoost Model
 ↓
 PostgreSQL Database
 ↓
-Alert Generation
+Security Alerts
 ↓
 Monitoring Dashboard
 
 ---
 
-## ⚙ Tech Stack
+# Core Features
 
-### Backend
+### Real-Time Threat Detection
+
+Built a security intelligence platform capable of identifying suspicious activities and abnormal patterns.
+
+### Machine Learning Detection Engine
+
+Implemented an XGBoost model optimized for anomaly detection and rare event identification.
+
+### Secure API Architecture
+
+Developed FastAPI-based APIs with authentication, logging, and observability capabilities.
+
+### Threat Monitoring
+
+Designed monitoring workflows inspired by enterprise SOC environments.
+
+### Logging and Observability
+
+Implemented structured logging and system monitoring for improved visibility and troubleshooting.
+
+### Dockerized Microservices
+
+Containerized the platform using Docker for portability and consistent deployment.
+
+### Scalable Architecture
+
+Designed the application following cloud-native and DevSecOps principles.
+
+---
+
+# Technology Stack
+
+## Backend
 
 - FastAPI
 - Python
 - REST APIs
 
-### Machine Learning
+## Machine Learning
 
 - XGBoost
 - Scikit-Learn
 - Feature Engineering
 
-### Database
+## Database
 
 - PostgreSQL
 
-### Infrastructure
+## Infrastructure
 
 - Docker
 - GitHub
 
-### Security
+## Security
 
 - Authentication
 - Logging
@@ -75,74 +92,31 @@ Monitoring Dashboard
 
 ---
 
-## 🎯 Current Capabilities
-
-### Threat Detection Engine
-
-Identifies suspicious activities and anomalies.
-
-### Security APIs
-
-Provides secure API endpoints.
-
-### Observability Layer
-
-Tracks logs and system events.
-
-### Alert System
-
-Generates threat notifications.
-
-### Dockerized Deployment
-
-Ensures consistent environments.
-
----
-
-## 📌 Upcoming Features
-
-- AI Security Assistant
-- SIEM Dashboard
-- Real-Time Streaming
-- WebSockets
-- Role-Based Access Control
-- Threat Intelligence Feed
-- Analytics Dashboard
-- Container Monitoring
-- Cloud Deployment
-- Kubernetes Support
-
----
-
-## 🛠 Project Status
-
-> Active Development 🚧
-
-SentinelX is evolving into a modern AI-driven security intelligence platform inspired by enterprise SOC and DevSecOps workflows.
-
----
-
-## 🎯 Focus Areas
+# Key Engineering Concepts
 
 - Cybersecurity
 - Threat Detection
 - DevSecOps
 - MLOps
-- FastAPI
-- Machine Learning
-- Cloud-Native Systems
+- FastAPI Microservices
+- Logging & Monitoring
+- Containerization
 - Security Engineering
 
 ---
 
-## 👨‍💻 Author
+# Project Status
 
-**Mayank Vispute**
+✅ Production Ready
+
+---
+
+# Author
+
+Mayank Vispute
 
 LinkedIn:
 https://www.linkedin.com/in/mayank-vispute-a28641251/
 
 Portfolio:
 https://mayankvispute-portfolio-rosy.vercel.app/
-
----
